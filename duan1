@@ -1,0 +1,223 @@
+import json
+class Sach:
+    def __init__(self, id_sach, tensach, tacgia, soluong):
+        self.id_sach = id_sach
+        self.tensach = tensach
+        self.tacgia = tacgia
+        self.soluong = soluong
+    def __str__(self):
+        return f"[{self.id_sach}] {self.tensach} - {self.tacgia} (Còn: {self.soluong})"
+class Bandoc:
+    def __init__(self, id_bandoc, tenbandoc):
+        self.id_bandoc = id_bandoc
+        self.tenbandoc = tenbandoc
+        self.ds_dangmuon = []
+    def muonsach(self, sachmuon):
+        self.ds_dangmuon.append(sachmuon)
+    def trasach(self, id_sach):
+        for s in self.ds_dangmuon:
+            if s.id_sach == id_sach:
+                self.ds_dangmuon.remove(s)
+                return True
+        return False
+    def __str__(self):
+        ds_muon = ', '.join([s.tensach for s in self.ds_dangmuon]) if self.ds_dangmuon else "Trống"
+        return f"[{self.id_bandoc}] {self.tenbandoc}\nSách đã mượn: {ds_muon}"
+class QuanLyDuLieu:
+    def __init__(self, filename="dulieu.json"):
+        self.filename = filename
+    def luu(self, ds_sach, ds_bandoc):
+        data = {
+            "sach": [{"id": s.id_sach, "ten": s.tensach, "tacgia": s.tacgia, "soluong": s.soluong}
+                     for s in ds_sach],
+            "bandoc": [{"id": b.id_bandoc, "ten": b.tenbandoc,
+                        "dangmuon": [s.id_sach for s in b.ds_dangmuon]}
+                       for b in ds_bandoc]
+        }
+        with open(self.filename, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+    def tai(self):
+        try:
+            with open(self.filename, "r", encoding="utf-8") as f:
+                data = json.load(f)
+        except:
+            return [], []
+        sach_dict = {}
+        ds_sach = []
+        for s in data.get("sach", []):
+            sach = Sach(s["id"], s["ten"], s["tacgia"], s["soluong"])
+            ds_sach.append(sach)
+            sach_dict[sach.id_sach] = sach
+        ds_bandoc = []
+        for b in data.get("bandoc", []):
+            bd = Bandoc(b["id"], b["ten"])
+            for id_sach in b.get("dangmuon", []):
+                if id_sach in sach_dict:
+                    bd.ds_dangmuon.append(sach_dict[id_sach])
+                else:
+                    bd.ds_dangmuon.append(Sach(id_sach, "?", "?", 0))
+            ds_bandoc.append(bd)
+        return ds_sach, ds_bandoc
+class Thuvien:
+    def __init__(self):
+        self.ds_sach = []
+        self.ds_bandoc = []
+        self.data_manager = QuanLyDuLieu()
+        self.ds_sach, self.ds_bandoc = self.data_manager.tai()
+    def them_sach(self, sach):
+        self.ds_sach.append(sach)
+        print(f"Đã thêm sách: {sach.tensach}")
+        self.data_manager.luu(self.ds_sach, self.ds_bandoc)
+    def them_bandoc(self, bandoc):
+        self.ds_bandoc.append(bandoc)
+        print(f"Đã thêm bạn đọc: {bandoc.tenbandoc}")
+        self.data_manager.luu(self.ds_sach, self.ds_bandoc)
+    def tim_sach(self, keyword):
+        return [s for s in self.ds_sach if keyword.lower() in s.tensach.lower() 
+                or keyword.lower() in s.tacgia.lower()]
+    def tim_bandoc(self, keyword):
+        return [b for b in self.ds_bandoc if keyword.lower() in b.tenbandoc.lower()]
+    def tim_sachid(self, id_sach):
+        for s in self.ds_sach:
+            if s.id_sach == id_sach:
+                return s
+        return None
+    def tim_bandocid(self, id_bandoc):
+        for b in self.ds_bandoc:
+            if b.id_bandoc == id_bandoc:
+                return b
+        return None
+    def muonsach(self, id_bandoc, id_sach):
+        bandoc = self.tim_bandocid(id_bandoc)
+        sach = self.tim_sachid(id_sach)
+        if not bandoc:
+            print("Không tìm thấy bạn đọc.")
+            return
+        if not sach:
+            print("Không tìm thấy sách.")
+            return
+        if sach.soluong <= 0:
+            print("Sách đã hết, không thể mượn.")
+            return
+        bandoc.muonsach(sach)
+        sach.soluong -= 1
+        print(f"Bạn đọc '{bandoc.tenbandoc}' đã mượn sách '{sach.tensach}'.")
+        self.data_manager.luu(self.ds_sach, self.ds_bandoc)
+    def trasach(self, id_bandoc, id_sach):
+        bandoc = self.tim_bandocid(id_bandoc)
+        sach = self.tim_sachid(id_sach)
+        if not bandoc or not sach:
+            print("Không tìm thấy bạn đọc hoặc sách.")
+            return
+        if bandoc.trasach(id_sach):
+            sach.soluong += 1
+            print(f"Bạn đọc '{bandoc.tenbandoc}' đã trả sách '{sach.tensach}'.")
+            self.data_manager.luu(self.ds_sach, self.ds_bandoc)
+        else:
+            print("Bạn đọc này không mượn sách có id trên.")
+    def xuat_ds_sach(self):
+        print("Danh sách sách:")
+        for s in self.ds_sach:
+            print(s)
+    def xuat_ds_bandoc(self):
+        print("Danh sách bạn đọc:")
+        for b in self.ds_bandoc:
+            print(b)
+    def xoa_sach(self, id_sach):
+        sach = self.tim_sachid(id_sach)
+        if sach:
+            for b in self.ds_bandoc:
+                if any(s.id_sach == id_sach for s in b.ds_dangmuon):
+                    print("Không thể xóa sách này vì có bạn đọc đang mượn.")
+                    return
+            self.ds_sach.remove(sach)
+            print(f"Đã xóa sách: {sach.tensach}")
+            self.data_manager.luu(self.ds_sach, self.ds_bandoc)
+        else:
+            print("Không tìm thấy sách cần xóa.")
+    def xoa_bandoc(self, id_bandoc):
+        bandoc = self.tim_bandocid(id_bandoc)
+        if bandoc:
+            if bandoc.ds_dangmuon:
+                print("Không thể xóa bạn đọc này vì còn sách chưa trả.")
+                return
+            self.ds_bandoc.remove(bandoc)
+            print(f"Đã xóa bạn đọc: {bandoc.tenbandoc}")
+            self.data_manager.luu(self.ds_sach, self.ds_bandoc)
+        else:
+            print("Không tìm thấy bạn đọc cần xóa.")
+def main():
+    thuvien = Thuvien()
+    while True:
+        print("\n--- Quản lý thư viện mini ---")
+        print("1. Thêm sách mới")
+        print("2. Thêm bạn đọc mới")
+        print("3. Tìm kiếm sách")
+        print("4. Tìm kiếm bạn đọc")
+        print("5. Xuất danh sách sách")
+        print("6. Xuất danh sách bạn đọc")
+        print("7. Mượn sách")
+        print("8. Trả sách")
+        print("9. Xóa sách")
+        print("10. Xóa bạn đọc")
+        print("11. Thoát")
+        chon = input("Chọn chức năng: ").strip()
+        if not chon.isdigit():
+            print("Lỗi! Vui lòng nhập số từ 1 đến 11.")
+            continue
+        if chon == '1':
+            id_sach = input("Nhập id sách: ")
+            tensach = input("Nhập tên sách: ")
+            tacgia = input("Nhập tên tác giả: ")
+            try:
+                soluong = int(input("Nhập số lượng: ").strip())
+            except ValueError:
+                print("Lỗi! Số lượng chỉ chứa số tự nhiên.")
+                continue
+            thuvien.them_sach(Sach(id_sach, tensach, tacgia, soluong))
+        elif chon == '2':
+            id_bandoc = input("Nhập id bạn đọc: ")
+            tenbandoc = input("Nhập tên bạn đọc: ")
+            thuvien.them_bandoc(Bandoc(id_bandoc, tenbandoc))
+        elif chon == '3':
+            keyword = input("Nhập từ khóa tìm kiếm sách: ")
+            ketqua = thuvien.tim_sach(keyword)
+            if ketqua:
+                for s in ketqua:
+                    print(s)
+            else:
+                print("Không tìm thấy sách phù hợp.")
+        elif chon == '4':
+            keyword = input("Nhập từ khóa tìm kiếm bạn đọc: ")
+            ketqua = thuvien.tim_bandoc(keyword)
+            if ketqua:
+                for b in ketqua:
+                    print(b)
+            else:
+                print("Không tìm thấy bạn đọc phù hợp.")
+        elif chon == '5':
+            thuvien.xuat_ds_sach()
+
+        elif chon == '6':
+            thuvien.xuat_ds_bandoc()
+        elif chon == '7':
+            id_bandoc = input("Nhập id bạn đọc mượn sách: ")
+            id_sach = input("Nhập id sách muốn mượn: ")
+            thuvien.muonsach(id_bandoc, id_sach)
+        elif chon == '8':
+            id_bandoc = input("Nhập id bạn đọc trả sách: ")
+            id_sach = input("Nhập id sách muốn trả: ")
+            thuvien.trasach(id_bandoc, id_sach)
+        elif chon == '9':
+            id_sach = input("Nhập id sách cần xóa: ")
+            thuvien.xoa_sach(id_sach)
+        elif chon == '10':
+            id_bandoc = input("Nhập id bạn đọc cần xóa: ")
+            thuvien.xoa_bandoc(id_bandoc)
+        elif chon == '11':
+            print("Thoát chương trình.")
+            break
+        else:
+            print("Lựa chọn không hợp lệ, vui lòng chọn lại.")
+if __name__ == "__main__":
+    main()
