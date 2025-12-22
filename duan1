@@ -65,10 +65,16 @@ class Thuvien:
         self.data_manager = QuanLyDuLieu()
         self.ds_sach, self.ds_bandoc = self.data_manager.tai()
     def them_sach(self, sach):
+        if self.tim_sachid(sach.id_sach):
+            print(f"Lỗi! Sách có ID '{sach.id_sach}' đã tồn tại.")
+            return
         self.ds_sach.append(sach)
         print(f"Đã thêm sách: {sach.tensach}")
         self.data_manager.luu(self.ds_sach, self.ds_bandoc)
     def them_bandoc(self, bandoc):
+        if self.tim_bandocid(bandoc.id_bandoc):
+            print(f"Lỗi! Bạn đọc có ID '{bandoc.id_bandoc}' đã tồn tại.")
+            return
         self.ds_bandoc.append(bandoc)
         print(f"Đã thêm bạn đọc: {bandoc.tenbandoc}")
         self.data_manager.luu(self.ds_sach, self.ds_bandoc)
@@ -166,9 +172,9 @@ def main():
             print("Lỗi! Vui lòng nhập số từ 1 đến 11.")
             continue
         if chon == '1':
-            id_sach = input("Nhập id sách: ")
-            tensach = input("Nhập tên sách: ")
-            tacgia = input("Nhập tên tác giả: ")
+            id_sach = input("Nhập id sách: ").strip()
+            tensach = input("Nhập tên sách: ").strip()
+            tacgia = input("Nhập tên tác giả: ").strip()
             try:
                 soluong = int(input("Nhập số lượng: ").strip())
             except ValueError:
@@ -176,11 +182,11 @@ def main():
                 continue
             thuvien.them_sach(Sach(id_sach, tensach, tacgia, soluong))
         elif chon == '2':
-            id_bandoc = input("Nhập id bạn đọc: ")
-            tenbandoc = input("Nhập tên bạn đọc: ")
+            id_bandoc = input("Nhập id bạn đọc: ").strip()
+            tenbandoc = input("Nhập tên bạn đọc: ").strip()
             thuvien.them_bandoc(Bandoc(id_bandoc, tenbandoc))
         elif chon == '3':
-            keyword = input("Nhập từ khóa tìm kiếm sách: ")
+            keyword = input("Nhập từ khóa tìm kiếm sách: ").strip()
             ketqua = thuvien.tim_sach(keyword)
             if ketqua:
                 for s in ketqua:
@@ -188,7 +194,7 @@ def main():
             else:
                 print("Không tìm thấy sách phù hợp.")
         elif chon == '4':
-            keyword = input("Nhập từ khóa tìm kiếm bạn đọc: ")
+            keyword = input("Nhập từ khóa tìm kiếm bạn đọc: ").strip()
             ketqua = thuvien.tim_bandoc(keyword)
             if ketqua:
                 for b in ketqua:
@@ -200,18 +206,18 @@ def main():
         elif chon == '6':
             thuvien.xuat_ds_bandoc()
         elif chon == '7':
-            id_bandoc = input("Nhập id bạn đọc mượn sách: ")
-            id_sach = input("Nhập id sách muốn mượn: ")
+            id_bandoc = input("Nhập id bạn đọc mượn sách: ").strip()
+            id_sach = input("Nhập id sách muốn mượn: ").strip()
             thuvien.muonsach(id_bandoc, id_sach)
         elif chon == '8':
-            id_bandoc = input("Nhập id bạn đọc trả sách: ")
-            id_sach = input("Nhập id sách muốn trả: ")
+            id_bandoc = input("Nhập id bạn đọc trả sách: ").strip()
+            id_sach = input("Nhập id sách muốn trả: ").strip()
             thuvien.trasach(id_bandoc, id_sach)
         elif chon == '9':
-            id_sach = input("Nhập id sách cần xóa: ")
+            id_sach = input("Nhập id sách cần xóa: ").strip()
             thuvien.xoa_sach(id_sach)
         elif chon == '10':
-            id_bandoc = input("Nhập id bạn đọc cần xóa: ")
+            id_bandoc = input("Nhập id bạn đọc cần xóa: ").strip()
             thuvien.xoa_bandoc(id_bandoc)
         elif chon == '11':
             print("Thoát chương trình.")
