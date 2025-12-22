@@ -11,11 +11,100 @@
       "id": "S002",
       "tacgia": "Nguyễn Du",
       "soluong": 05
+    },
+    {
+      "ten": "Cát bụi chân ai",
+      "id": "S003",
+      "tacgia": "Tô Hoài",
+      "soluong"03
+    },
+    {
+      "ten": "Dế Mèn phiêu lưu ký",
+      "id": "S004",
+      "tacgia": "Tô Hoài",
+      "soluong": 05
+    },
+    {
+      "ten": "Đồi gió hú",
+      "id": "S005",
+      "tacgia": "Emily Brontë",
+      "soluong": 03
+    },
+    {
+      "ten": "Tắt đèn",
+      "id": "S006",
+      "tacgia": "Ngô Tất Tố",
+      "soluong": 03
+    },
+  ]
+
+{
+  "ds_b{
+  "ds_sach": [
+    {
+      "ten": "Quê nội",
+      "id": "S001",
+      "tacgia": "Võ Quảng",
+      "soluong": 03
+    },
+    {
+      "ten": "Truyện Kiều",
+      "id": "S002",
+      "tacgia": "Nguyễn Du",
+      "soluong": 05
+    },
+    {
+      "ten": "Cát bụi chân ai",
+      "id": "S003",
+      "tacgia": "Tô Hoài",
+      "soluong"03
+    },
+    {
+      "ten": "Dế Mèn phiêu lưu ký",
+      "id": "S004",
+      "tacgia": "Tô Hoài",
+      "soluong": 05
+    },
+    {
+      "ten": "Đồi gió hú",
+      "id": "S005",
+      "tacgia": "Emily Brontë",
+      "soluong": 03
+    },
+    {
+      "ten": "Tắt đèn",
+      "id": "S006",
+      "tacgia": "Ngô Tất Tố",
+      "soluong": 03
+    },
+    {
+      "ten": "Sherlock Holmes",
+      "id": "S007",
+      "tacgia": "Arthur Conan Doyle",
+      "soluong": 03
+    },
+    {
+      "ten": "Harry Potter",
+      "id": "S008",
+      "tacgia": "J.K. Rowling",
+      "soluong": 10
+    },
+    {
+      "ten": "Doraemon",
+      "id": "S009",
+      "tacgia": "Fujiko F. Fujio",
+      "soluong": 05
+    },
+    {
+      "ten": "Thư cho em",
+      "id": "S010",
+      "tacgia": "Hoàng Nam Tiến",
+      "soluong": 03
     }
   ]
-}
+
 {
-  "ds_andoc": [
+  "ds_bandoc": [
     {
       "ten": "Nguyễn Văn A",
       "id": "BD001"
@@ -23,6 +112,18 @@
     {
       "ten": "Nguyễn Thị B",
       "id": "BD002"
+    },
+    {
+      "ten": "Đặng Thị C",
+      "id": "BD003"
+    },
+    {
+      "ten": "Dương Văn D",
+      "id": "BD004"
+    },
+    {
+      "ten": "Trần Văn D",
+      "id": "BD005"
     }
   ]
 }
