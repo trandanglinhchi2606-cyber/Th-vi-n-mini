@@ -197,7 +197,6 @@ def main():
                 print("Không tìm thấy bạn đọc phù hợp.")
         elif chon == '5':
             thuvien.xuat_ds_sach()
-
         elif chon == '6':
             thuvien.xuat_ds_bandoc()
         elif chon == '7':
