@@ -1,28 +1,28 @@
 {
-  "Sach": [
+  "ds_sach": [
     {
-      "tensach": "Quê nội",
-      "id_sach": "S001",
+      "ten": "Quê nội",
+      "id": "S001",
       "tacgia": "Võ Quảng",
       "soluong": 03
     },
     {
-      "tensach": "Truyện Kiều",
-      "id_sach": "S002",
+      "ten": "Truyện Kiều",
+      "id": "S002",
       "tacgia": "Nguyễn Du",
       "soluong": 05
     }
   ]
 }
 {
-  "Bandoc": [
+  "ds_andoc": [
     {
-      "tenbandoc": "Nguyễn Văn A",
-      "id_bandoc": "BD001"
+      "ten": "Nguyễn Văn A",
+      "id": "BD001"
     },
     {
-      "tenbandoc": "Nguyễn Thị B",
-      "id_bandoc": "BD002"
+      "ten": "Nguyễn Thị B",
+      "id": "BD002"
     }
   ]
 }
