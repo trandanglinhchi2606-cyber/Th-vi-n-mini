@@ -1,0 +1,28 @@
+{
+  "Sach": [
+    {
+      "tensach": "Quê nội",
+      "id_sach": "S001",
+      "tacgia": "Võ Quảng",
+      "soluong": 03
+    },
+    {
+      "tensach": "Truyện Kiều",
+      "id_sach": "S002",
+      "tacgia": "Nguyễn Du",
+      "soluong": 05
+    }
+  ]
+}
+{
+  "Bandoc": [
+    {
+      "tenbandoc": "Nguyễn Văn A",
+      "id_bandoc": "BD001"
+    },
+    {
+      "tenbandoc": "Nguyễn Thị B",
+      "id_bandoc": "BD002"
+    }
+  ]
+}
