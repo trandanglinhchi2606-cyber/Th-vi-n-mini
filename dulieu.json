@@ -36,46 +36,6 @@
       "tacgia": "Ngô Tất Tố",
       "soluong": 03
     },
-  ]
-
-{
-  "ds_sach": [
-    {
-      "ten": "Quê nội",
-      "id": "S001",
-      "tacgia": "Võ Quảng",
-      "soluong": 03
-    },
-    {
-      "ten": "Truyện Kiều",
-      "id": "S002",
-      "tacgia": "Nguyễn Du",
-      "soluong": 05
-    },
-    {
-      "ten": "Cát bụi chân ai",
-      "id": "S003",
-      "tacgia": "Tô Hoài",
-      "soluong"03
-    },
-    {
-      "ten": "Dế Mèn phiêu lưu ký",
-      "id": "S004",
-      "tacgia": "Tô Hoài",
-      "soluong": 05
-    },
-    {
-      "ten": "Đồi gió hú",
-      "id": "S005",
-      "tacgia": "Emily Brontë",
-      "soluong": 03
-    },
-    {
-      "ten": "Tắt đèn",
-      "id": "S006",
-      "tacgia": "Ngô Tất Tố",
-      "soluong": 03
-    },
     {
       "ten": "Sherlock Holmes",
       "id": "S007",
