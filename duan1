@@ -88,16 +88,6 @@ class Thuvien:
                 or keyword.lower() in s.tacgia.lower()]
     def tim_bandoc(self, keyword):
         return [b for b in self.ds_bandoc if keyword.lower() in b.tenbandoc.lower()]
-    def tim_sachid(self, id_sach):
-        for s in self.ds_sach:
-            if s.id_sach == id_sach:
-                return s
-        return None
-    def tim_bandocid(self, id_bandoc):
-        for b in self.ds_bandoc:
-            if b.id_bandoc == id_bandoc:
-                return b
-        return None
     def muonsach(self, id_bandoc, id_sach):
         bandoc = self.tim_bandocid(id_bandoc)
         sach = self.tim_sachid(id_sach)
