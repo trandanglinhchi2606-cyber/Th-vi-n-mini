@@ -21,9 +21,14 @@ class Bandoc:
                 return True
         return False
     def __str__(self):
-        ds_muon = ', '.join([s.tensach for s in self.ds_dangmuon]) if self.ds_dangmuon else "Trống"
+        if self.ds_dangmuon:
+            ten_sach = []
+            for s in self.ds_dangmuon:
+                ten_sach.append(s.tensach)
+            ds_muon = ", ".join(ten_sach)
+        else:
+            ds_muon = "Trống"
         return f"[{self.id_bandoc}] {self.tenbandoc}\nSách đã mượn: {ds_muon}"
-class QuanLyDuLieu:
     def __init__(self, filename="dulieu.json"):
         self.filename = filename
     def luu(self, ds_sach, ds_bandoc):
