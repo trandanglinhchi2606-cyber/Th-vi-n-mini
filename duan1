@@ -29,6 +29,7 @@ class Bandoc:
         else:
             ds_muon = "Trống"
         return f"[{self.id_bandoc}] {self.tenbandoc}\nSách đã mượn: {ds_muon}"
+class QuanLyDuLieu:
     def __init__(self, filename="dulieu.json"):
         self.filename = filename
     def luu(self, ds_sach, ds_bandoc):
